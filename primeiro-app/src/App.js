@@ -1,10 +1,24 @@
 import Perfil from "./components/Perfil";
+import { useState } from 'react';
 function App() {
-  return (
+  const [dev, setDev] = useState('[Desenvolvedor]')
+  function disparaEventos(nome) {
+    setDev(nome)
+  }
+
+  return ( // Codigo HTML
     <div>
-      <Perfil nome_Completo = "Edson Lopes da Silva Junior"/>
-      <Perfil profissao = "Estágiario Full-Stack"/>
-      <Perfil especialidade = "Desenvolvimento WEB"/>
+      <button onClick={() => {
+        disparaEventos(
+          <Perfil nome_Completo="Edson Lopes da Silva Junior"
+            profissao="Estágiario Full-Stack"
+            especialidade="Desenvolvimento WEB" />
+        )
+      }
+      }>Aperta aqui!</button>
+
+      <p>Hello! {dev}</p>
+
     </div>
   );
 }
