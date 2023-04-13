@@ -1,56 +1,83 @@
-import { useState } from 'react';
-function App() {
+import { useState, useEffect } from "react";
 
-  const [nome, setNome] = useState('');
-  const [idade, setIdade] = useState('');
-  const [email, setEmail] = useState('');
-  const [user, setUser] = useState({})
+function App() {
+  const [nome, setNome] = useState("");
+  const [idade, setIdade] = useState("");
+  const [email, setEmail] = useState("");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const usersStore = localStorage.getItem("@usuarios");
+    if(usersStore) {
+      setUsers(JSON.parse(usersStore))
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("@usuarios", JSON.stringify(users));
+  }, [users]);
 
   function registrar(event) {
     event.preventDefault();
-    alert('Úsuario registrado com sucesso!')
-
-    setUser({
-      nome: nome,
-      idade: idade,
-      email: email
-    })
-
+    const newUser = { nome, idade, email };
+    setUsers([...users, newUser]);
+    setNome("");
+    setIdade("");
+    setEmail("");
   }
 
-  return ( // Codigo HTML
+  return (
     <div>
-      <h1>Cadastro de Úsuario</h1>
-      <form onSubmit={registrar}> 
-        <label>Nome:</label><br />
+      <h1>Cadastro de Usuário</h1>
+      <form onSubmit={registrar}>
+        <label>Nome:</label>
+        <br />
         <input
           type="text"
           placeholder="Digite o seu nome"
-          values={nome}
-          onChange={(element) => setNome(element.target.value)}
-        /><br /><br />
-        <label>Idade: </label><br />
+          value={nome}
+          onChange={(event) => setNome(event.target.value)}
+        />
+        <br />
+        <br />
+        <label>Idade: </label>
+        <br />
         <input
           type="text"
           placeholder="Digite a sua idade"
-          values={idade}
-          onChange={(element) => setIdade(element.target.value)}
-        /><br /><br />
-        <label>Email: </label><br />
+          value={idade}
+          onChange={(event) => setIdade(event.target.value)}
+        />
+        <br />
+        <br />
+        <label>Email: </label>
+        <br />
         <input
           type="text"
           placeholder="Digite o seu email"
-          values={email}
-          onChange={(element) => setEmail(element.target.value)}
-        /><br /><br />
-        <button type="Submit">Registrar</button>
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <br />
+        <br />
+        <button type="submit">Registrar</button>
       </form>
-      <br /><br />
-      <div>
-        <span>Nome: {user.nome}</span><br />
-        <span>Idade: {user.idade}</span><br />
-        <span>Email: {user.email}</span>
-      </div>
+      <br />
+      <br />
+      <ul>
+        {users.map((user, index) => (
+          <li key={index}>
+            <span>Usuário: {index + 1}</span>
+            <div>
+              Nome: {user.nome}
+              <br />
+              Idade: {user.idade} <br />
+              Email: {user.email}
+            </div>
+            <br />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
