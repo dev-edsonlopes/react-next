@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react"; //Import Hooks
+import "./style.css";
 
 function App() {
+  const [nutri, setNutri] = useState([]); //Criando o use Effect
+  useEffect(() => {
+    function loadApi() {
+      //Obter o resultado do API
+      let url = "https://sujeitoprogramador.com/rn-api/?api=posts";
+      fetch(url)
+        .then((r) => r.json())
+        .then((json) => {
+          console.log(json);
+          setNutri(json);
+        });
+    }
+
+    loadApi(); // Carregar o API
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="container">
+      <header>
+        <strong>React Nutric</strong>
       </header>
+      {nutri.map((item) => {
+        return (
+          <article key={item.id} className="post">
+            <strong>{item.titulo}</strong>
+            <img src={item.capa} alt={item.titulo} className="capa" />
+            <p className="subtitulo">{item.subtitulo}</p>
+            <a className="botao">Acessar</a>
+          </article>
+        );
+      })}
     </div>
   );
 }
