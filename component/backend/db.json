@@ -1,3 +1,14 @@
 {
-  "users": []
+  "users": [
+    {
+      "name": "EDSON LOPES DA SILVA JUNIOR",
+      "email": "edson.junior@mobs2.com",
+      "id": 1
+    },
+    {
+      "name": "JENNIFER MARCELA DA SILVA ",
+      "email": "marcela.jennifer.jm@gmail.com",
+      "id": 2
+    }
+  ]
 }
