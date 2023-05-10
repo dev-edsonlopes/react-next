@@ -1,10 +1,11 @@
-import Link from "next/link"
+import Layout from "../components/Layout"
+
+Layout
+
 export default function Inicio() {
     return (
         <div>
-            <Link href="/estilo">
-                ESTILO
-            </Link>
+            <Layout />
         </div>
     )
 }
